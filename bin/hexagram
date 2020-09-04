@@ -51,13 +51,13 @@ function formatLine($val)
 {
 	switch ($val) {
 		case 6:
-			return '————  🗙  ————';
+			return '————  ❌ ————';
 		case 7:
 			return '—————————————';
 		case 8:
 			return '————     ————';
 		case 9:
-			return '——————◯——————';
+			return '——————⭕️—————';
 	}
 }
 
@@ -85,15 +85,17 @@ function slug($question)
 	);
 }
 
+$std_in = trim( fgets(STDIN) );
+
 // Coins
-if (count($argv) === 1) {
+if (count($argv) === 1 && empty( $std_in ) ) {
 	$lines = [
 		castCoin(), castCoin(), castCoin(), castCoin(), castCoin(), castCoin(),
 	];
-} elseif (count($argv) === 2) {
+} elseif ( count( $argv ) === 2 && empty( $std_in ) ) {
 	$lines = array_map('intval', str_split($argv[1], 1));
 } else {
-	$lines = array_map('intval', str_split(trim(fgets(STDIN))));
+	$lines = array_map('intval', str_split( $std_in ) );
 }
 
 // Must use 6
