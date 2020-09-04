@@ -138,6 +138,6 @@ foreach ($lines as $index => $line) {
 if ($changesTo != $lines) {
 	fwrite($file, "Changes to:\n\n");
 	fwrite($file, formatLines($changesTo) . $p);
-	$changeNumber = Yijing::getNumber(linesToBinary($lines));
+	$changeNumber = Yijing::getNumber(linesToBinary($changesTo));
 	fwrite($file, $text[$changeNumber] . $p);
 }
