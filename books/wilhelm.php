@@ -681,7 +681,7 @@ have as its sole aim the establishment of public security and peace.
 ENDOFCHAPTER
 ,
 5 => <<<ENDOFCHAPTER
-	5. Hs&uuml; / Waiting (Nourishment)
+	5. Hsü / Waiting (Nourishment)
 
 		above  K'AN  THE ABYSMAL, WATER
 		below  CH'IEN  THE CREATIVE, HEAVEN
@@ -1362,7 +1362,7 @@ come, would lead to misfortune.
 ENDOFCHAPTER
 ,
 10 => <<<ENDOFCHAPTER
-	10. L&uuml; / Treading [conduct]
+	10. Lü / Treading [conduct]
 
 		above  CH'IEN  THE CREATIVE, HEAVEN
 		below  TUI  THE JOYOUS, LAKE
@@ -2155,7 +2155,7 @@ oneself, will something forceful really be achieved.
 ENDOFCHAPTER
 ,
 16 => <<<ENDOFCHAPTER
-	16. Y&uuml; / Enthusiasm
+	16. Yü / Enthusiasm
 
 		above  CHêN  THE AROUSING, THUNDER
 		below  K'UN  THE RECEPTIVE, EARTH
@@ -7356,7 +7356,7 @@ his family that in the end he finds himself completely isolated.
 ENDOFCHAPTER
 ,
 56 => <<<ENDOFCHAPTER
-	56. L&uuml; / The Wanderer
+	56. Lü / The Wanderer
 
 		above  LI  THE CLINGING, FIRE
 		below  KêN  KEEPING STILL, MOUNTAIN
