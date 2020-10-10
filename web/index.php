@@ -209,6 +209,7 @@ if ( isset( $_GET['roll'] ) ) {
 	p[data-val="8"],
 	p[data-val="9"] {
 		height: 10px;
+		width: 200px;
 	}
 
 	p[data-val="6"]:before { content: "————  ❌ ————"; }
@@ -225,7 +226,7 @@ if ( isset( $_GET['roll'] ) ) {
 		clear:left;
 	}
 
-	body{ margin-left: 20vw; background: #fff ;}
+	body{ margin-left: 20vw; width: 80vw; font-size: 2vw; background: #fff ;}
 </style>
 </head>
 
