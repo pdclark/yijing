@@ -1,5 +1,4 @@
-#!/usr/bin/env php
-<?php
+<?php #!/usr/bin/env php
 
 require_once dirname(__DIR__) . '/lib/Yijing.php';
 
@@ -88,7 +87,7 @@ function slug($question)
 $std_in = trim( fgets(STDIN) );
 
 // Coins
-if (count($argv) === 1 && empty( $std_in ) ) {
+if (count($argv) === 1 || empty( $std_in ) ) {
 	$lines = [
 		castCoin(), castCoin(), castCoin(), castCoin(), castCoin(), castCoin(),
 	];

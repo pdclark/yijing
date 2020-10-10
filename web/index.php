@@ -224,6 +224,8 @@ if ( isset( $_GET['roll'] ) ) {
 		float:left;
 		clear:left;
 	}
+
+	body{ margin-left: 20vw; background: #fff ;}
 </style>
 </head>
 
