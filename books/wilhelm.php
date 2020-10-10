@@ -4443,7 +4443,7 @@ good.
 ENDOFCHAPTER
 ,
 34 => <<<ENDOFCHAPTER
-	34. Ta Chuang / The Power of the Great <!--Akira Rabelais-->
+	34. Ta Chuang / The Power of the Great
 	
 		above  CHêN  THE AROUSING, THUNDER
 		above  CH'IEN  THE CREATIVE, HEAVEN
@@ -7980,7 +7980,7 @@ otherwise would succumb to irresolution and temptation.
 ENDOFCHAPTER
 ,
 61 => <<<ENDOFCHAPTER
-	61. Chung Fu / Inner Truth <!--Akira Rabelais-->
+	61. Chung Fu / Inner Truth
 
 		above SUN  THE GENTLE, WIND
 		below TUI  THE JOYOUS, LAKE
