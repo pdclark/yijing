@@ -13,6 +13,10 @@ class api {
 	function __construct( $roll = false ) {
 		$this->text = include dirname( __DIR__ ) . '/books/wilhelm.php';
 
+		include dirname( __DIR__ ) . '/lib/parsedown/Parsedown.php';
+		$parsedown = new Parsedown();
+		$parsedown->setBreaksEnabled(true);
+
 		if ( false === $roll ) {
 			$this->values['roll'] = [ $this->coin_toss(), $this->coin_toss(), $this->coin_toss(), $this->coin_toss(), $this->coin_toss(), $this->coin_toss() ];
 		}else {
@@ -24,11 +28,11 @@ class api {
 
 		$this->values['number'] = Yijing::getNumber( $this->lines_to_binary( $this->values['roll'] ) );
 		$this->values['title'] = Yijing::getName( $this->values['number'] );
-		$this->values['text'] = $this->text[ $this->values['number'] ];
+		$this->values['text'] = $parsedown->text( $this->text[ $this->values['number'] ] );
 
 		$this->values[ 'roll_changes_to' ] = $this->roll_changes_to();
 		$this->values[ 'roll_changes_to_number' ] = Yijing::getNumber( $this->lines_to_binary( $this->values[ 'roll_changes_to' ] ) );
-		$this->values['roll_changes_to_text'] = $this->text[ $this->values['roll_changes_to_number'] ];
+		$this->values['roll_changes_to_text'] = $parsedown->text( $this->text[ $this->values['roll_changes_to_number'] ] );
 
 	}
 
@@ -164,6 +168,15 @@ if ( isset( $_GET['roll'] ) ) {
 	p[data-val="7"]:before { content: "—————————————"; }
 	p[data-val="8"]:before { content: "————     ————"; }
 	p[data-val="9"]:before { content: "——————⭕️—————"; }
+
+	pre,p {clear:left;}
+	.line-1,.line-2,.line-3,.line-4,.line-5,.line-6 {
+		padding: 5px;
+		background-color: #ccc;
+		display:inline-block;
+		float:left;
+		clear:left;
+	}
 </style>
 </head>
 
@@ -176,7 +189,7 @@ jQuery(document).ready( function($){
 	window.data = <?php echo $api; ?>;
 
 	window.$roll_changes_to_text = $('<pre>').html( data.roll_changes_to_text );
-	window.$text = $('<pre>').html( data.text );
+	window.$text = $('<div>').html( data.text );
 	window.$rollEl = $('<pre>' ).html( data.roll_large_html );
 
 	$('#app').before( $rollEl ).before( $text ).before( $roll_changes_to_text );
@@ -189,8 +202,39 @@ jQuery(document).ready( function($){
 		}else {
 			window.$roll_changes_to_text.html( window.data.roll_changes_to_text );
 		}
+
+		$text.add( $roll_changes_to_text ).find('p').remove();
+
+		var $line1 = $text.add( $roll_changes_to_text ).find('pre:contains("THE LINES")');
+
+		$line1
+			.addClass('line-1')
+			.next().addClass('line-2')
+			.next().addClass('line-3')
+			.next().addClass('line-4')
+			.next().addClass('line-5')
+			.next().addClass('line-6')
+
+		$roll_changes_to_text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').remove();
+		$text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').hide();
+
+		$rollEl.find('p').each(function(){
+			if ( '6' == $(this).data('val') || '9' == $(this).data('val') ) {
+				console.log( $(this).index() );
+				switch ( $(this).index() ) {
+					case 0: $('.line-6').show(); break;
+					case 1: $('.line-5').show(); break;
+					case 2: $('.line-4').show(); break;
+					case 3: $('.line-3').show(); break;
+					case 4: $('.line-2').show(); break;
+					case 5: $('.line-1').show(); break;
+				}
+			}
+		});
+
 		// window.$rollEl.html( window.data.roll_large_html );
 	}
+	updateData();
 
 	$rollEl.find('p').click( function(){
 
@@ -212,7 +256,7 @@ jQuery(document).ready( function($){
 
 		$.get( url, {},
 			function( data ) {
-				console.log( data );
+				// console.log( data );
 				window.data = JSON.parse( data );
 				updateData();
 			}
