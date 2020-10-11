@@ -277,7 +277,6 @@ jQuery(document).ready( function($){
 
 		$rollEl.find('p').each(function(){
 			if ( '6' == $(this).data('val') || '9' == $(this).data('val') ) {
-				console.log( $(this).index() );
 				switch ( $(this).index() ) {
 					case 0: $('.line-6').show(); break;
 					case 1: $('.line-5').show(); break;

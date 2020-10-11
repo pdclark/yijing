@@ -4446,7 +4446,7 @@ ENDOFCHAPTER
 	34. Ta Chuang / The Power of the Great
 	
 		above  CHêN  THE AROUSING, THUNDER
-		above  CH'IEN  THE CREATIVE, HEAVEN
+		below  CH'IEN  THE CREATIVE, HEAVEN
 
 The great lines, that is, the light, strong lines, are powerful. Four light lines 
 have entered the hexagram from below and are about to ascend higher. The 
