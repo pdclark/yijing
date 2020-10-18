@@ -211,7 +211,7 @@
 			});
 
 			if ( $('.roll-single' ).length ) {
-				$text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').show();
+				$text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').hide();
 			}
 
 			// window.$rollEl.html( window.data.roll_large_html );
