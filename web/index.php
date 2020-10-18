@@ -64,7 +64,11 @@
 		}
 
 		#roll-button {
-			position: fixed; top: 85vh; left: 2vw;
+			position: fixed; top: 65vh; left: 2vw;
+			font-size: 10vh;
+		}
+		#roll-button a {
+			text-decoration: none;
 		}
 
 		body{ margin-left: 22vw; top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw;}
@@ -73,7 +77,7 @@
 	</head>
 
 	<body>
-		<pre id="roll-button"><a href="javascript:window.location.reload()">( Roll )</a></pre>
+		<pre id="roll-button"><a href="javascript:window.location.reload()">🔄</a></pre>
 
 	<div id="app"></div>
 
