@@ -1,185 +1,9 @@
 <?php
 
-require_once dirname(__DIR__) . '/lib/Yijing.php';
+require_once dirname( __DIR__ ) . '/lib/Yijing.php';
+require_once dirname( __DIR__ ) . '/lib/random-int.php';
+require_once dirname( __DIR__ ) . '/lib/roll-api.php';
 
-if (!function_exists('random_int')) {
-    function random_int($min, $max) {
-        if (!function_exists('mcrypt_create_iv')) {
-            trigger_error(
-                'mcrypt must be loaded for random_int to work', 
-                E_USER_WARNING
-            );
-            return null;
-        }
-        
-        if (!is_int($min) || !is_int($max)) {
-            trigger_error('$min and $max must be integer values', E_USER_NOTICE);
-            $min = (int)$min;
-            $max = (int)$max;
-        }
-        
-        if ($min > $max) {
-            trigger_error('$max can\'t be lesser than $min', E_USER_WARNING);
-            return null;
-        }
-        
-        $range = $counter = $max - $min;
-        $bits = 1;
-        
-        while ($counter >>= 1) {
-            ++$bits;
-        }
-        
-        $bytes = (int)max(ceil($bits/8), 1);
-        $bitmask = pow(2, $bits) - 1;
-
-        if ($bitmask >= PHP_INT_MAX) {
-            $bitmask = PHP_INT_MAX;
-        }
-
-        do {
-            $result = hexdec(
-                bin2hex(
-                    mcrypt_create_iv($bytes, MCRYPT_DEV_URANDOM)
-                )
-            ) & $bitmask;
-        } while ($result > $range);
-
-        return $result + $min;
-    }
-}
-
-class api {
-	
-	public $values = [
-		'roll' => '',
-	];
-
-	public $text;
-
-	function __construct( $roll = false ) {
-		$this->text = include dirname( __DIR__ ) . '/books/wilhelm.php';
-
-		include dirname( __DIR__ ) . '/lib/parsedown/Parsedown.php';
-		$parsedown = new Parsedown();
-		$parsedown->setBreaksEnabled(true);
-
-		if ( false === $roll ) {
-			$this->values['roll'] = [ $this->coin_toss(), $this->coin_toss(), $this->coin_toss(), $this->coin_toss(), $this->coin_toss(), $this->coin_toss() ];
-		}else {
-			$this->values['roll'] = $roll;
-		}
-
-		$this->values['roll_large_txt'] = $this->format_lines_txt( $this->values['roll'] );
-		$this->values['roll_large_html'] = $this->format_lines_html( $this->values['roll'] );
-
-		$this->values['number'] = Yijing::getNumber( $this->lines_to_binary( $this->values['roll'] ) );
-		$this->values['title'] = Yijing::getName( $this->values['number'] );
-		$this->values['text'] = $parsedown->text( $this->text[ $this->values['number'] ] );
-
-		$this->values[ 'roll_changes_to' ] = $this->roll_changes_to();
-		$this->values[ 'roll_changes_to_number' ] = Yijing::getNumber( $this->lines_to_binary( $this->values[ 'roll_changes_to' ] ) );
-		$this->values['roll_changes_to_text'] = $parsedown->text( $this->text[ $this->values['roll_changes_to_number'] ] );
-
-	}
-
-	function __toString(){
-		return json_encode( $this->values );
-	}
-
-	function coin_toss() {
-		$coins = [
-			random_int(0,63) % 2,
-			random_int(0,63) % 2,
-			random_int(0,63) % 2,
-		];
-		return array_reduce($coins, function($carry, $item) {
-			return $carry + ($item ? 3 : 2);
-		});
-	}
-
-	function lines_to_binary( $lines ) {
-		$bin = '';
-		foreach ($lines as $line) {
-			switch ($line) {
-				case 6:
-				case 8:
-					$bin .= '0';
-					break;
-				case 7:
-				case 9:
-					$bin .= '1';
-					break;
-			}
-		}
-		return base_convert(strrev($bin), 2, 10);
-	}
-
-	function roll_changes_to() {
-		$changesTo = [];
-		foreach ($this->values['roll'] as $index => $line) {
-			switch ($line) {
-				case 6:
-					$changesTo[$index] = 7;
-					break;
-				case 9:
-					$changesTo[$index] = 8;
-					break;
-				default:
-					$changesTo[$index] = $line;
-					break;
-			}
-		}
-
-		return $changesTo;
-	}
-
-	function format_line($val) {
-		switch ($val) {
-			case 6:
-				return '————  ❌ ————';
-			case 7:
-				return '—————————————';
-			case 8:
-				return '————     ————';
-			case 9:
-				return '——————⭕️—————';
-		}
-	}
-
-	function format_lines_txt( $lines ) {
-		foreach ($lines as $index => $line) {
-			$output .= '    ' . $this->format_line( $line ) . ' ' . (6 - $index) . "\n";
-		}
-		
-		return $output;
-	}
-	function format_lines_html( $lines ) {
-		foreach ($lines as $index => $line) {
-			$output .= '<p data-val="' . $line . '"></p>';
-		}
-		
-		return $output;
-	}
-
-	// function formatQuickLine( $val ) {
-	// 	switch ($val) {
-	// 		case 6:
-	// 		case 8:
-	// 			return '¦';
-	// 		case 7:
-	// 		case 9:
-	// 			return '|';
-	// 	}
-	// }
-
-	// function slug($question) {
-	// 	return preg_replace(
-	// 		'/-{2,}/g', '-', 
-	// 		preg_replace('/[^a-zA-Z0-9]/', '-', $question)
-	// 	);
-	// }
-}
 
 if ( isset( $_GET['roll'] ) ) {
 	$api = new api( [
@@ -195,9 +19,6 @@ if ( isset( $_GET['roll'] ) ) {
 }else {
 	$api = new api();
 }
-
-
-
 
 ?><!DOCTYPE html>
 <html lang="en"> 
@@ -217,7 +38,8 @@ if ( isset( $_GET['roll'] ) ) {
 	p[data-val="8"]:before { content: "————     ————"; }
 	p[data-val="9"]:before { content: "——————⭕️—————"; }
 
-	pre,p {clear:left;}
+	pre,p {clear:left; white-space: pre-wrap; max-width: 75vw;}
+		
 	.line-1,.line-2,.line-3,.line-4,.line-5,.line-6 {
 		padding: 5px;
 		background-color: #ccc;
@@ -226,20 +48,35 @@ if ( isset( $_GET['roll'] ) ) {
 		clear:left;
 	}
 
-	body{ margin-left: 20vw; width: 80vw; font-size: 2vw; background: #fff ;}
+	nav {
+		position: fixed; top: 0; left: 0;
+	}
+	nav ul { width: 20vw; margin:0; padding:0;}
+	nav li { list-style-type: none; margin:0; padding:0; display:inline-block;}
+
+	.roll-from { color: green; }
+	.roll-to { color: red; }
+	.roll-single { color: blue; }
+
+	#roll {
+		position: fixed; top: 30vh; left: 1vw;
+		font-size: 2.4vw;
+	}
+
+	#roll-button {
+		position: fixed; top: 70vh; left: 2vw;
+	}
+
+	body{ margin-left: 22vw; top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw;}
 </style>
+<script   src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
 </head>
 
 <body>
-	<pre><a href="javascript:window.location.reload()">( Roll )</a></pre>
+	<pre id="roll-button"><a href="javascript:window.location.reload()">( Roll )</a></pre>
+
 <div id="app"></div>
 
-
-<pre>
-
-</pre>
-
-<script   src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
 <script>
 jQuery(document).ready( function($){
 
@@ -247,9 +84,21 @@ jQuery(document).ready( function($){
 
 	window.$roll_changes_to_text = $('<pre>').html( data.roll_changes_to_text );
 	window.$text = $('<div>').html( data.text );
-	window.$rollEl = $('<pre>' ).html( data.roll_large_html );
+	window.$rollEl = $('<pre>' ).attr('id', 'roll').html( data.roll_large_html );
 
 	$('#app').before( $rollEl ).before( $text ).before( $roll_changes_to_text );
+
+	window.$nav = $('<nav><ul></ul></nav>');
+	console.log( window.data.unicode );
+	$.each( window.data.unicode, function( index, unicode ) {
+		$nav.find('ul').append( 
+			$('<li>' )
+				.attr('data-number', index )
+				.attr('data-unicode', unicode )
+				.text( unicode )
+		);
+	});
+	$('#app').after( $nav );
 
 	function updateData() {
 		// console.log( window.data.roll_large_html );
@@ -261,6 +110,28 @@ jQuery(document).ready( function($){
 		}
 
 		$text.add( $roll_changes_to_text ).find('p').remove();
+
+
+		// console.log( $nav );
+		// console.log( data.number );
+
+		$nav.find('li')
+			.removeClass('roll-from')
+			.removeClass('roll-single')
+			.removeClass('roll-to')
+
+		if ( data.roll_changes_to_number == data.number ) {
+			$nav
+			.find('li[data-number="' + data.number + '"]')
+				.addClass('roll-single');
+		}else {
+			$nav
+				.find('li[data-number="' + data.number + '"]')
+				.addClass('roll-from');
+			$nav
+				.find('li[data-number="' + data.roll_changes_to_number + '"]')
+				.addClass('roll-to');
+		}
 
 		var $line1 = $text.add( $roll_changes_to_text ).find('pre:contains("THE LINES")');
 
@@ -322,5 +193,7 @@ jQuery(document).ready( function($){
 
 } );
 </script>
+
+<pre></pre>
 </body>
 </html>
