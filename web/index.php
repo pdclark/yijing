@@ -66,6 +66,7 @@
 		#roll-button {
 			position: fixed; top: 65vh; left: 2vw;
 			font-size: 10vh;
+			z-index: 100;
 		}
 		#roll-button a {
 			text-decoration: none;
