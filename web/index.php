@@ -25,11 +25,17 @@
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<style>
+
+		#roll {
+			position: fixed; top: 40vh; left: 2vw;
+			font-size: 2vw;
+		}
+
 		p[data-val="6"],
 		p[data-val="7"],
 		p[data-val="8"],
 		p[data-val="9"] {
-			height: 10px;
+			height: 1vh;
 			width: 200px;
 		}
 
@@ -58,18 +64,26 @@
 		.roll-to { color: red; }
 		.roll-single { color: blue; }
 
-		#roll {
-			position: fixed; top: 50vh; left: 1vw;
-			font-size: 2.4vw;
-		}
-
 		#roll-button {
-			position: fixed; top: 65vh; left: 2vw;
+			position: fixed; bottom: 0vh; left: 2vw;
 			font-size: 10vh;
 			z-index: 100;
+			display:inline-block;
 		}
 		#roll-button a {
 			text-decoration: none;
+
+		}
+
+		@media (orientation: landscape) {
+			#roll-button {
+				left: auto;
+				right: 2vw;
+				bottom: 13vh;
+			}
+			#roll {
+				top: auto; left: 2vw; bottom: 0vh;
+			}
 		}
 
 		body{ margin-left: 22vw; top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw;}
@@ -195,6 +209,10 @@
 					}
 				}
 			});
+
+			if ( $('.roll-single' ).length ) {
+				$text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').show();
+			}
 
 			// window.$rollEl.html( window.data.roll_large_html );
 		}
