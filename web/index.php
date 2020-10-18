@@ -163,7 +163,11 @@ jQuery(document).ready( function($){
 	}
 	updateData();
 
-	$rollEl.find('p').click( function(){
+	$nav.find('li').click( function(){
+		window.location.reload();
+	});
+
+	$rollEl.find('p').add().click( function(){
 
 		switch ( '' + $(this).data('val') ) {
 			case '6':  $(this).data( 'val', '7' ).attr( 'data-val', '7' ); break;
