@@ -89,14 +89,46 @@ jQuery(document).ready( function($){
 	$('#app').before( $rollEl ).before( $text ).before( $roll_changes_to_text );
 
 	window.$nav = $('<nav><ul></ul></nav>');
-	console.log( window.data.unicode );
-	$.each( window.data.unicode, function( index, unicode ) {
+
+	$.each( window.data.hexagrams, function( index, hex ) {
 		$nav.find('ul').append( 
 			$('<li>' )
 				.attr('data-number', index )
-				.attr('data-unicode', unicode )
-				.text( unicode )
+				.attr('data-unicode', hex.unicode )
+				.attr('data-binary', hex.binary )
+				.text( hex.unicode )
 		);
+	});
+	$nav.find('li').click(function(){
+		var roll = '';
+		for ( i=5; i>=0; i-- ) {
+			var tmp_binary = $(this).attr('data-binary').substring( i, i+1 );
+			var tmp_roll = '';
+			switch( tmp_binary ) {
+				case '0': roll += '8'; tmp_roll = '8'; break;
+				case '1': roll += '7'; tmp_roll = '7'; break;
+			}
+			$rollEl.find('p:eq(' + (5-i) + ')').attr('data-val', tmp_roll );
+		}
+
+		// repeat of below when click line
+		// var roll = '' + $rollEl.find('p:eq(0)').data('val') +
+		// 	$rollEl.find('p:eq(1)').data('val') +
+		// 	$rollEl.find('p:eq(2)').data('val') +
+		// 	$rollEl.find('p:eq(3)').data('val') +
+		// 	$rollEl.find('p:eq(4)').data('val') +
+		// 	$rollEl.find('p:eq(5)').data('val');
+
+		var url = './?roll=' + roll;
+
+		$.get( url, {},
+			function( data ) {
+				// console.log( data );
+				window.data = JSON.parse( data );
+				updateData();
+			}
+		);
+
 	});
 	$('#app').after( $nav );
 
@@ -163,9 +195,9 @@ jQuery(document).ready( function($){
 	}
 	updateData();
 
-	$nav.find('li').click( function(){
-		window.location.reload();
-	});
+	// $nav.find('li').click( function(){
+	// 	window.location.reload();
+	// });
 
 	$rollEl.find('p').add().click( function(){
 

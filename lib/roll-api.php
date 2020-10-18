@@ -32,7 +32,15 @@ class api {
 		$this->values[ 'roll_changes_to_number' ] = Yijing::getNumber( $this->lines_to_binary( $this->values[ 'roll_changes_to' ] ) );
 		$this->values['roll_changes_to_text'] = $parsedown->text( $this->text[ $this->values['roll_changes_to_number'] ] );
 
-		$this->values['unicode'] = Yijing::$unicode;
+		// $this->values['unicode'] = Yijing::$unicode;
+		// $this->values['number_to_roll'] = Yijing::$number_to_roll;
+
+		$this->values['hexagrams'] = [];
+		foreach( Yijing::$unicode as $key => $unicode ) {
+			$this->values['hexagrams'][ $key ]['unicode'] = $unicode;
+			$this->values['hexagrams'][ $key ]['binary'] = Yijing::$number_to_binary[ $key ];
+
+		}
 
 	}
 
