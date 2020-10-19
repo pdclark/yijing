@@ -58,11 +58,19 @@
 			position: fixed; top: 15vh; left: 0;
 		}
 		nav ul { width: 20vw; margin:0; padding:0;}
-		nav li { list-style-type: none; margin:0; padding:0; display:inline-block;}
-
-		.roll-from { color: green; }
-		.roll-to { color: red; }
-		.roll-single { color: blue; }
+		nav li { list-style-type: none; margin:0; padding:0; display:inline-block; position: relative; }
+		nav li:before {
+			content: attr( data-number );
+			position: absolute;
+			top: -.85vh;
+			left: .5vh;
+			font-size: 1.5vh;
+			color: rgba( 0,0,0, .3 );
+			font-family: monospace;
+		}
+		.roll-from { color: green; }        .roll-from:before { color: green; }
+		.roll-to { color: red; }        .roll-to:before { color: red; }
+		.roll-single { color: blue; }        .roll-single:before { color: blue; }
 
 		.roll-from, .roll-to, .roll-single {
 			/*font-size: 12vh;*/
