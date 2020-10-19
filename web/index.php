@@ -64,6 +64,17 @@
 		.roll-to { color: red; }
 		.roll-single { color: blue; }
 
+		.roll-from, .roll-to, .roll-single {
+			float:left;
+			/*font-size: 12vh;*/
+			font-size: 4vh;
+			/*margin: -2vh -.5vh -3vh -.5vh;*/
+			margin: -1vh -.5vh -1vh -.5vh;
+			top: .5vh;
+			left: .25vh;
+			position: relative;
+		}
+
 		#roll-button {
 			position: fixed; bottom: 0vh; left: 2vw;
 			font-size: 10vh;
