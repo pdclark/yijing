@@ -65,7 +65,6 @@
 		.roll-single { color: blue; }
 
 		.roll-from, .roll-to, .roll-single {
-			float:left;
 			/*font-size: 12vh;*/
 			font-size: 4vh;
 			/*margin: -2vh -.5vh -3vh -.5vh;*/
