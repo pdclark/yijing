@@ -24,13 +24,16 @@ class api {
 		$this->values['roll_large_txt'] = $this->format_lines_txt( $this->values['roll'] );
 		$this->values['roll_large_html'] = $this->format_lines_html( $this->values['roll'] );
 
+		$from = ['FIRE', 'RIVER', 'HEAVEN', 'WIND', 'WATER', 'MOUNTAIN', 'EARTH', 'THUNDER', 'LAKE', 'WOOD', 'FLAME' ];
+		$to = ['<b><span>🔥</span> Fire</b>', '<b><span>🦦</span> River</b>', '<b><span>🌌</span> Heaven</b>', '<b><span>💨</span> Wind</b>', '<b><span>🌊</span> Water</b>', '<b><span>🏔</span> Mountain</b>', '<b><span>🌎</span> Earth</b>', '<b><span>⛈</span> Thunder</b>', '<b><span>🏞</span> Lake</b>', '<b><span>🌲</span> Wood</b>', '<b><span>🔥</span> Flame</b>' ];
+
 		$this->values['number'] = Yijing::getNumber( $this->lines_to_binary( $this->values['roll'] ) );
 		$this->values['title'] = Yijing::getName( $this->values['number'] );
-		$this->values['text'] = $parsedown->text( $this->text[ $this->values['number'] ] );
+		$this->values['text'] = str_replace( $from, $to, $parsedown->text( $this->text[ $this->values['number'] ] ) );
 
 		$this->values[ 'roll_changes_to' ] = $this->roll_changes_to();
 		$this->values[ 'roll_changes_to_number' ] = Yijing::getNumber( $this->lines_to_binary( $this->values[ 'roll_changes_to' ] ) );
-		$this->values['roll_changes_to_text'] = $parsedown->text( $this->text[ $this->values['roll_changes_to_number'] ] );
+		$this->values['roll_changes_to_text'] = str_replace( $from, $to, $parsedown->text( $this->text[ $this->values['roll_changes_to_number'] ] ) );
 
 		// $this->values['unicode'] = Yijing::$unicode;
 		// $this->values['number_to_roll'] = Yijing::$number_to_roll;

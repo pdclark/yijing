@@ -93,6 +93,21 @@
 
 		}
 
+		b {
+			font-weight: normal;
+			position: relative;
+		}
+		b:first-child span {
+			top: -12vh;
+		}
+		b span {
+			font-size: 12vh;
+			position: absolute;
+			top: 0vh;
+			z-index: -1;
+			opacity: .5;
+		}
+
 		@media (orientation: landscape) {
 			#roll-button {
 				left: auto;
