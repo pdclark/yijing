@@ -48,11 +48,25 @@
 			
 		.line-1,.line-2,.line-3,.line-4,.line-5,.line-6 {
 			padding: 5px;
-			background-color: #ccc;
+			background-color: rgba( 0,0,0,.5 );
+			color: rgb( 255,255,255 );
 			display:inline-block;
 			float:left;
 			clear:left;
+			font-size: 2.5vh;
+			position: relative;
 		}
+		.line-1:before, .line-2:before, .line-3:before, .line-4:before, .line-5:before, .line-6:before {
+			color: rgba( 180, 20, 20, .5 ); position: absolute; 
+			top: -3vh; left: -2vh;
+			font-size: 5vh;
+		}
+		.line-1:before { content: "1"; }
+		.line-2:before { content: "2"; }
+		.line-3:before { content: "3"; }
+		.line-4:before { content: "4"; }
+		.line-5:before { content: "5"; }
+		.line-6:before { content: "6"; }
 
 		nav {
 			position: fixed; top: 15vh; left: 0;
@@ -93,6 +107,7 @@
 
 		}
 
+		/* Emoji & Chinese */
 		b {
 			font-weight: normal;
 			position: relative;
@@ -107,7 +122,7 @@
 			top: 0vh;
 			z-index: -1;
 			opacity: .3;
-			width: 40vh;
+			/*width: 40vh;*/
 			white-space: nowrap;
 		}
 

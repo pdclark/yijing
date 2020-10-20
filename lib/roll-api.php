@@ -39,7 +39,7 @@ class api {
 			'wind'       => '<b><span>风💨</span>wind</b>',
 			'Wind'       => '<b><span>风💨</span>Wind</b>',
 			'WIND'       => '<b><span>风💨</span> Wind</b>',
-			'Mountains'   => '<b><span>山🏔</span>mountains</b>',
+			'Mountains'   => '<b><span>山🏔</span>Mountains</b>',
 			'Mountain'   => '<b><span>山🏔</span>mountain</b>',
 			'mountain'   => '<b><span>山🏔</span>mountain</b>',
 			'MOUNTAIN'   => '<b><span>山🏔</span> Mountain</b>',
@@ -62,6 +62,9 @@ class api {
 			'WATER'      => '<b><span>水🌊</span> Water</b>',
 			'Fox'      => '<b><span>狐🦊</span>Fox</b>',
 			'fox'      => '<b><span>狐🦊</span>fox</b>',
+			// 'THE LINES' . PHP_EOL . PHP_EOL  => '',
+			'THE JUDGMENT' . PHP_EOL . PHP_EOL  => '',
+			'THE IMAGE' . PHP_EOL . PHP_EOL  => '',
 		];
 
 		$this->values['number'] = Yijing::getNumber( $this->lines_to_binary( $this->values['roll'] ) );
