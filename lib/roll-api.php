@@ -24,16 +24,53 @@ class api {
 		$this->values['roll_large_txt'] = $this->format_lines_txt( $this->values['roll'] );
 		$this->values['roll_large_html'] = $this->format_lines_html( $this->values['roll'] );
 
-		$from = ['FIRE', 'RIVER', 'HEAVEN', 'WIND', 'WATER', 'MOUNTAIN', 'EARTH', 'THUNDER', 'LAKE', 'WOOD', 'FLAME' ];
-		$to = ['<b><span>🔥</span> Fire</b>', '<b><span>🦦</span> River</b>', '<b><span>🌌</span> Heaven</b>', '<b><span>💨</span> Wind</b>', '<b><span>🌊</span> Water</b>', '<b><span>🏔</span> Mountain</b>', '<b><span>🌎</span> Earth</b>', '<b><span>⛈</span> Thunder</b>', '<b><span>🏞</span> Lake</b>', '<b><span>🌲</span> Wood</b>', '<b><span>🔥</span> Flame</b>' ];
+		$from_to = [
+			'Fire'      => '<b><span>⽕🔥</span>Fire</b>',
+			'fire'       => '<b><span>⽕🔥</span>fire</b>',
+			'FIRE'       => '<b><span>⽕🔥</span> Fire</b>',
+			'flame'      => '<b><span>⽕🔥</span>flame</b>',
+			'FLAME'      => '<b><span>⽕🔥</span> Flame</b>',
+			'River'      => '<b><span>河🦦</span>River</b>',
+			'river'      => '<b><span>河🦦</span>river</b>',
+			'RIVER'      => '<b><span>河🦦</span> River</b>',
+			'Heaven'     => '<b><span>天堂🌌</span>Heaven</b>',
+			'heaven'     => '<b><span>天堂🌌</span>heaven</b>',
+			'HEAVEN'     => '<b><span>天堂🌌</span> Heaven</b>',
+			'wind'       => '<b><span>风💨</span>wind</b>',
+			'Wind'       => '<b><span>风💨</span>Wind</b>',
+			'WIND'       => '<b><span>风💨</span> Wind</b>',
+			'Mountains'   => '<b><span>山🏔</span>mountains</b>',
+			'Mountain'   => '<b><span>山🏔</span>mountain</b>',
+			'mountain'   => '<b><span>山🏔</span>mountain</b>',
+			'MOUNTAIN'   => '<b><span>山🏔</span> Mountain</b>',
+			'Earth'      => '<b><span>地球🌎</span>Earth</b>',
+			'earth'      => '<b><span>地球🌎</span>earth</b>',
+			'EARTH'      => '<b><span>地球🌎</span> Earth</b>',
+			'Thunder'    => '<b><span>雷⛈</span>Thunder</b>',
+			'thunder'    => '<b><span>雷⛈</span>thunder</b>',
+			'THUNDER'    => '<b><span>雷⛈</span> Thunder</b>',
+			'rain'    => '<b><span>雨🌧</span>rain</b>',
+			'Rain'    => '<b><span>雨🌧</span>Rain</b>',
+			'Lake'       => '<b><span>湖🏞</span>Lake</b>',
+			'lake'       => '<b><span>湖🏞</span>lake</b>',
+			'LAKE'       => '<b><span>湖🏞</span> Lake</b>',
+			'Wood'       => '<b><span>木🌲</span>Wood</b>',
+			'wood'       => '<b><span>木🌲</span>wood</b>',
+			'WOOD'       => '<b><span>木🌲</span> Wood</b>',
+			'Water'      => '<b><span>水🌊</span>Water</b>',
+			'water'      => '<b><span>水🌊</span>water</b>',
+			'WATER'      => '<b><span>水🌊</span> Water</b>',
+			'Fox'      => '<b><span>狐狸🦊</span>Fox</b>',
+			'fox'      => '<b><span>狐狸🦊</span>fox</b>',
+		];
 
 		$this->values['number'] = Yijing::getNumber( $this->lines_to_binary( $this->values['roll'] ) );
 		$this->values['title'] = Yijing::getName( $this->values['number'] );
-		$this->values['text'] = str_replace( $from, $to, $parsedown->text( $this->text[ $this->values['number'] ] ) );
+		$this->values['text'] = str_replace( array_keys( $from_to ), array_values( $from_to ), $parsedown->text( $this->text[ $this->values['number'] ] ) );
 
 		$this->values[ 'roll_changes_to' ] = $this->roll_changes_to();
 		$this->values[ 'roll_changes_to_number' ] = Yijing::getNumber( $this->lines_to_binary( $this->values[ 'roll_changes_to' ] ) );
-		$this->values['roll_changes_to_text'] = str_replace( $from, $to, $parsedown->text( $this->text[ $this->values['roll_changes_to_number'] ] ) );
+		$this->values['roll_changes_to_text'] = str_replace( array_keys( $from_to ), array_values( $from_to ), $parsedown->text( $this->text[ $this->values['roll_changes_to_number'] ] ) );
 
 		// $this->values['unicode'] = Yijing::$unicode;
 		// $this->values['number_to_roll'] = Yijing::$number_to_roll;

@@ -98,14 +98,17 @@
 			position: relative;
 		}
 		b:first-child span {
-			top: -12vh;
+			top: -8vh;
+			left: -4vh;
 		}
 		b span {
-			font-size: 12vh;
+			font-size: 8vh;
 			position: absolute;
 			top: 0vh;
 			z-index: -1;
-			opacity: .5;
+			opacity: .3;
+			width: 40vh;
+			white-space: nowrap;
 		}
 
 		@media (orientation: landscape) {
