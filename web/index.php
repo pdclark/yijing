@@ -236,7 +236,7 @@
 					.addClass('roll-to');
 			}
 
-			var $line1 = $text.add( $roll_changes_to_text ).find('pre:contains("THE LINES")');
+			var $line1 = $text.add( $roll_changes_to_text ).find('pre:contains("⚬")');
 
 			$line1
 				.addClass('line-1')

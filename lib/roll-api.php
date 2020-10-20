@@ -82,7 +82,7 @@ class api {
 			'bring humiliation'      => 'brings humiliation',
 			'Fellowship with Men'      => 'Fellowship with People',
 			'FELLOWSHIP WITH MEN' => 'FELLOWSHIP WITH PEOPLE',
-			// 'THE LINES' . PHP_EOL . PHP_EOL  => '',
+			'THE LINES' . PHP_EOL . PHP_EOL  => '⚬ ',
 			'THE JUDGMENT' . PHP_EOL . PHP_EOL  => '',
 			'THE IMAGE' . PHP_EOL . PHP_EOL  => '',
 		];
