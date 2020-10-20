@@ -44,7 +44,9 @@
 		p[data-val="8"]:before { content: "————     ————"; }
 		p[data-val="9"]:before { content: "——————⭕️—————"; }
 
-		pre,p {clear:left; white-space: pre-wrap; max-width: 75vw;}
+		pre,p {clear:left; white-space: pre-wrap; max-width: 75vw;
+			 text-shadow: 0 0 1vw #fff;
+		}
 			
 		.line-1,.line-2,.line-3,.line-4,.line-5,.line-6 {
 			padding: 5px;
@@ -55,6 +57,7 @@
 			clear:left;
 			font-size: 2.5vh;
 			position: relative;
+			text-shadow: 0 0 1vw #000;
 		}
 		.line-1:before, .line-2:before, .line-3:before, .line-4:before, .line-5:before, .line-6:before {
 			color: rgba( 180, 20, 20, .5 ); position: absolute; 
