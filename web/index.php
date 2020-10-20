@@ -114,13 +114,13 @@
 		}
 		b:first-child span {
 			top: -18vh;
-			left: -20vh;
+			left: -30vh;
 		}
 		b span {
 			font-size: 26vh;
 			position: absolute;
 			top: 0vh;
-			left: -40vw;
+			left: -50vw;
 			z-index: -1;
 			opacity: .2;
 			/*width: 40vh;*/

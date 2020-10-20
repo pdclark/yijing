@@ -72,6 +72,8 @@ class api {
 			' he stands'      => ' they stand',
 			' he does'      => ' they do',
 			'He does'      => 'They do',
+			'He is'      => 'They are',
+			'he is'      => 'they are',
 			' his'      => ' their',
 			' him'      => ' them',
 			'men will'      => 'people will',
