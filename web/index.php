@@ -26,9 +26,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<style>
 
+		pre,p {clear:left; white-space: pre-wrap; max-width: 75vw;
+			 text-shadow: 0 0 1vw #fff;
+		}
+
+		/* Roll Lines */
 		#roll {
-			position: fixed; top: 40vh; left: 2vw;
+			/*position: fixed; bottom: 11vh; left: 2vw;*/
 			font-size: 2vw;
+			position: relative; left: 2vw;
 		}
 
 		p[data-val="6"],
@@ -43,10 +49,6 @@
 		p[data-val="7"]:before { content: "—————————————"; }
 		p[data-val="8"]:before { content: "————     ————"; }
 		p[data-val="9"]:before { content: "——————⭕️—————"; }
-
-		pre,p {clear:left; white-space: pre-wrap; max-width: 75vw;
-			 text-shadow: 0 0 1vw #fff;
-		}
 			
 		.line-1,.line-2,.line-3,.line-4,.line-5,.line-6 {
 			padding: 5px;
@@ -72,8 +74,9 @@
 		.line-5:before { content: "5"; }
 		.line-6:before { content: "6"; }
 
+		/* Before, after, and hexagrams */
 		nav {
-			position: fixed; top: 15vh; left: 0;
+			position: fixed; top: 0vh; left: 0;
 		}
 		nav ul { width: 20vw; margin:0; padding:0;}
 		nav li { list-style-type: none; margin:0; padding:0; width: 2.5vw; display:inline-block; position: relative; }
@@ -98,6 +101,35 @@
 			/*top: .5vh;*/
 			/*left: .25vh;*/
 			position: relative;
+		}
+
+		nav .before, nav .after {
+			/*border: 1px solid red;*/
+			width: 20vw;
+			height: 20vw;
+			position: relative;
+		}
+
+		nav .before:after, nav .after:after {
+			font-size: 20vw;
+			top: -1vw;
+			left: .5vw;
+			position: absolute;
+		}
+		nav .before:before, nav .after:before {
+			font-family: monospace;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+
+		nav .before:before { content: attr( data-number ); }
+		nav .before:after { content: attr( data-unicode ); }
+		nav .after:before { content: attr( data-number ); }
+		nav .after:after { content: attr( data-unicode ); }
+
+		nav li.roll-from:before, nav li.roll-to:before, nav li.roll-single:before {
 		}
 
 		#roll-button {
@@ -131,16 +163,16 @@
 			white-space: nowrap;
 		}
 
-		@media (orientation: landscape) {
+		/*@media (orientation: landscape) {*/
 			#roll-button {
 				left: auto;
 				right: 2vw;
 				bottom: 13vh;
 			}
-			#roll {
-				top: auto; left: 2vw; bottom: 0vh;
-			}
-		}
+			/*#roll {
+				top: 80vw; left: 2vw; bottom: auto;
+			}*/
+		/*}*/
 
 		body{ margin-left: 22vw; top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw; overflow-x:hidden;}
 	</style>
@@ -161,9 +193,11 @@
 		window.$text = $('<div>').html( data.text );
 		window.$rollEl = $('<pre>' ).attr('id', 'roll').html( data.roll_large_html );
 
-		$('#app').before( $rollEl ).before( $text ).before( $roll_changes_to_text );
+		$('#app').before( $text ).before( $roll_changes_to_text );
 
-		window.$nav = $('<nav><ul></ul></nav>');
+		window.$nav = $('<nav><div class="before"></div><ul></ul><div class="after"></div></nav>');
+
+		$nav.append( $rollEl );
 
 		$.each( window.data.hexagrams, function( index, hex ) {
 			$nav.find('ul').append( 
@@ -227,17 +261,37 @@
 				.removeClass('roll-single')
 				.removeClass('roll-to')
 
+			var unicode_before = $nav.find('li[data-number="' + data.number + '"]').data('unicode');
+
 			if ( data.roll_changes_to_number == data.number ) {
+
 				$nav
-				.find('li[data-number="' + data.number + '"]')
+					.find('li[data-number="' + data.number + '"]')
 					.addClass('roll-single');
+
+				$nav.find('.before')
+					.attr('data-number', data.number )
+					.attr('data-unicode', unicode_before );
+
+				$nav.find('.after')
+					.attr('data-number', '' )
+					.attr('data-unicode', '' );
 			}else {
 				$nav
 					.find('li[data-number="' + data.number + '"]')
 					.addClass('roll-from');
+				$nav.find('.before')
+					.attr('data-number', data.number )
+					.attr('data-unicode', unicode_before );;
+
+				var unicode_after = $nav.find('li[data-number="' + data.roll_changes_to_number + '"]').data('unicode');
+
 				$nav
 					.find('li[data-number="' + data.roll_changes_to_number + '"]')
 					.addClass('roll-to');
+				$nav.find('.after')
+					.attr('data-number', data.roll_changes_to_number )
+					.attr('data-unicode', unicode_after );
 			}
 
 			var $line1 = $text.add( $roll_changes_to_text ).find('pre:contains("⚬")');
