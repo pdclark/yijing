@@ -62,6 +62,7 @@ class api {
 			'WATER'      => '<b><span>水🌊</span> Water</b>',
 			'Fox'      => '<b><span>狐🦊</span>Fox</b>',
 			'fox'      => '<b><span>狐🦊</span>fox</b>',
+			'man'      => '<b><span>🙇‍♂️</span>person</b>',
 			// 'THE LINES' . PHP_EOL . PHP_EOL  => '',
 			'THE JUDGMENT' . PHP_EOL . PHP_EOL  => '',
 			'THE IMAGE' . PHP_EOL . PHP_EOL  => '',
