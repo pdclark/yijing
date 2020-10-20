@@ -72,7 +72,7 @@
 			position: fixed; top: 15vh; left: 0;
 		}
 		nav ul { width: 20vw; margin:0; padding:0;}
-		nav li { list-style-type: none; margin:0; padding:0; display:inline-block; position: relative; }
+		nav li { list-style-type: none; margin:0; padding:0; width: 2.5vw; display:inline-block; position: relative; }
 		nav li:before {
 			content: attr( data-number );
 			position: absolute;
@@ -88,11 +88,11 @@
 
 		.roll-from, .roll-to, .roll-single {
 			/*font-size: 12vh;*/
-			font-size: 4vh;
-			/*margin: -2vh -.5vh -3vh -.5vh;*/
-			margin: -1vh -.5vh -1vh -.5vh;
-			top: .5vh;
-			left: .25vh;
+			font-size: 3vh;
+			margin: -2vh -.5vh -3vh -.25vh;
+			/*margin: -1vh -.5vh -1vh -.5vh;*/
+			/*top: .5vh;*/
+			/*left: .25vh;*/
 			position: relative;
 		}
 
@@ -107,7 +107,7 @@
 
 		}
 
-		/* Emoji & Chinese */
+		/* Emoji */
 		b {
 			font-weight: normal;
 			position: relative;
