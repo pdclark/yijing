@@ -63,6 +63,7 @@
 			color: rgba( 180, 20, 20, .5 ); position: absolute; 
 			top: -3vh; left: -2vh;
 			font-size: 5vh;
+			text-shadow:none;
 		}
 		.line-1:before { content: "1"; }
 		.line-2:before { content: "2"; }
