@@ -149,16 +149,18 @@
 			position: relative;
 		}
 		b:first-child span {
-			top: -18vh;
-			left: -30vh;
+			/*top: -18vh;
+			left: -30vh;*/
 		}
 		b span {
-			font-size: 26vh;
-			position: absolute;
+			font-size: 6vh;
+			margin-right: .5vh;
+			/*font-size: 26vh;*/
+			/*position: absolute;
 			top: 0vh;
-			left: -50vw;
+			left: -50vw;*/
 			z-index: -1;
-			opacity: .2;
+			/*opacity: .2;*/
 			/*width: 40vh;*/
 			white-space: nowrap;
 		}
