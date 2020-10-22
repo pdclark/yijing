@@ -50,7 +50,7 @@ class api {
 			'thunder'    => '<b><span>雷⚡️</span>thunder</b>',
 			'THUNDER'    => '<b><span>雷⚡️</span> Thunder</b>',
 			'SHOCK'    => '<b><span>休克⚡️</span> SHOCK</b>',
-			'rain'    => '<b><span>雨🌧</span>rain</b>',
+			' rain'    => ' <b><span>雨🌧</span>rain</b>',
 			'Rain'    => '<b><span>雨🌧</span>Rain</b>',
 			'Lake'       => '<b><span>湖🏞</span>Lake</b>',
 			'lake'       => '<b><span>湖🏞</span>lake</b>',
