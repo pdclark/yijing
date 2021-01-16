@@ -174,7 +174,30 @@
 		nav li.active {
 			background-color: #000;
 			color: #fff;
+			opacity: .5;
+			border-radius: 6px;
 		}
+		.from-above .active, .from-below .active {
+			background-color: green;
+		}
+		.to-above .active, .to-below .active {
+			background-color: red;
+		}
+
+		nav li:before {
+			top: 0px;
+			font-size: 3vw;
+			z-index:-1;
+		}
+		nav li[data-trigram="☰"]:before { content: "🌌"; }
+		nav li[data-trigram="☷"]:before { content: "🌎"; }
+		nav li[data-trigram="☳"]:before { content: "⚡️"; }
+		nav li[data-trigram="☶"]:before { content: "🏔"; }
+		nav li[data-trigram="☵"]:before { content: "🌊"; }
+		nav li[data-trigram="☲"]:before { content: "🔥"; }
+		nav li[data-trigram="☴"]:before { content: "💨"; }
+		nav li[data-trigram="☱"]:before { content: "🏞"; }
+
 		/*nav li.active:before {
 			content: attr( data-binary );
 			color: green;
