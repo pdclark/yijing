@@ -95,15 +95,24 @@
 		nav {
 			position: fixed; top: 0vh; left: 0;
 			width: 100vw;
+			height: 33vw;
 			background-color: rgba( 255,255,255,.8);
 		}
 		nav .ul-wrap { 
-			width: 30vw; margin:0; padding:0; float:left; 
+			width: 80vw; margin:0; padding:0; float:left;
+			position: relative;
+			position:absolute;
+			left: 10vw;
+			top: 16vw;
 		}
+		nav .ul-wrap.first {
+			top: 0;
+		}
+
 		nav .ul-wrap ul {
-			margin:0; padding: 0 0 0 5vw;
+			margin:0; padding: 0 0 0 10vw;
 		}
-		nav li { list-style-type: none; margin:0; padding:0; width: 2.5vw; display:inline-block; position: relative; }
+		nav li { list-style-type: none; margin:0; padding:0; width: 6vw; display:inline-block; position: relative; font-size: 6vw; }
 		nav li:before {
 			content: attr( data-number );
 			position: absolute;
@@ -130,15 +139,17 @@
 
 		nav .before, nav .after {
 			display: inline-block;
-			float:left;
+			left: 0;
+			top: 5vh;
 			/*border: 1px solid red;*/
 			/*width: 20vw;*/
 			/*height: 20vw;*/
-			position: relative;
+			position: absolute;
+			font-size: 5vw;
 		}
 
 		nav .before:after, nav .after:after {
-			font-size: 20vw;
+			
 			/*top: -1vw;*/
 			/*left: .5vw;*/
 			/*position: absolute;*/
@@ -213,7 +224,7 @@
 			}*/
 		/*}*/
 
-		body{ top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw; overflow-x:hidden; margin: 10vh auto 10vh auto; }
+		body{ top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw; overflow-x:hidden; margin: 33vw auto 10vh auto; }
 	</style>
 	<script   src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
 	</head>
@@ -233,7 +244,7 @@
 
 		$('#app').before( $text ).before( $roll_changes_to_text );
 
-		window.$nav = $('<nav><h2 class="易經">易經</h2><h3>From:</h3> <div class="before"></div> <div class="ul-wrap"><ul class="from-above"></ul><ul class="from-below"></ul></div> <h3>To:</h3> <div class="after"></div> <div class="ul-wrap"> <ul class="to-above"></ul><ul class="to-below"></ul> </div> <div id="roll-button"><a href="javascript:window.location.reload()">🔄</a></div> </nav>');
+		window.$nav = $('<nav><h2 class="易經">易經</h2><div class="ul-wrap first"><h3>From:</h3> <div class="before"></div><ul class="from-above"></ul><ul class="from-below"></ul></div>  <div class="ul-wrap"> <h3>To:</h3> <div class="after"></div> <ul class="to-above"></ul><ul class="to-below"></ul> </div> <div id="roll-button"><a href="javascript:window.location.reload()">🔄</a></div> </nav>');
 
 		$nav.append( $rollEl );
 
