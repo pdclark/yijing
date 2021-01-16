@@ -185,7 +185,8 @@
 		}
 
 		nav li:before {
-			top: 0px;
+			top: -6px;
+			left: 5px;
 			font-size: 3vw;
 			z-index:-1;
 		}
