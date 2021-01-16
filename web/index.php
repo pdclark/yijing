@@ -38,13 +38,18 @@
 		#text h2, pre h2 {
 			font-size: 20vh;
 			margin:0;	
+			float: left;
+			clear: left;
+		}
+		pre:nth-child(2) {
+			padding-top:4vw;
 		}
 
 		h3 {
 			font-size: 18px;
 		}
 
-		pre,p {clear:left; white-space: pre-wrap; max-width: 75vw;
+		pre,p { white-space: pre-wrap; width:100%;
 			 text-shadow: 0 0 1vw #fff;
 		}
 
