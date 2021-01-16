@@ -61,10 +61,15 @@ class api {
 			'Water'      => '<b><span>水🌊</span>Water</b>',
 			'water'      => '<b><span>水🌊</span>water</b>',
 			'WATER'      => '<b><span>水🌊</span> Water</b>',
+			'goose'      => '<b><span>鹅🦆</span>goose</b>',
+			'geese'      => '<b><span>鹅🦆</span>geese</b>',
+			'Geese'      => '<b><span>鹅🦆</span>Geese</b>',
+			'Goose'      => '<b><span>鹅🦆</span>Goose</b>',
 			'Fox'      => '<b><span>狐🦊</span>Fox</b>',
 			'fox'      => '<b><span>狐🦊</span>fox</b>',
 			' man'      => ' <b><span>人🙇‍♂️</span>person</b>',
 			'woman'      => '<b><span>⼥🙇‍♀️</span>person</b>',
+			'chile dally'      => 'child dally',
 			' he imitates'      => ' they imitate',
 			' he rids'      => ' they rid',
 			' he has'      => ' they have',
@@ -107,7 +112,17 @@ class api {
 		foreach( Yijing::$unicode as $key => $unicode ) {
 			$this->values['hexagrams'][ $key ]['unicode'] = $unicode;
 			$this->values['hexagrams'][ $key ]['binary'] = Yijing::$number_to_binary[ $key ];
-
+			$this->values['hexagrams'][ $key ]['roll'] = str_replace(
+				[ '0', '1' ],
+				[ '8', '7' ],
+				Yijing::$number_to_binary[ $key ]
+			);
+			if ( $key == $this->values[ 'number' ] ) {
+				$this->values['text'] = '<h2>' . $unicode . '</h2>' . $this->values['text'];
+			}
+			if ( $key == $this->values[ 'roll_changes_to_number' ] ) {
+				$this->values['roll_changes_to_text'] = '<h2>' . $unicode . '</h2>' . $this->values['roll_changes_to_text'];
+			}
 		}
 
 	}
@@ -141,7 +156,7 @@ class api {
 					break;
 			}
 		}
-		return base_convert(strrev($bin), 2, 10);
+		return $bin;
 	}
 
 	function roll_changes_to() {

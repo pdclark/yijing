@@ -9,7 +9,8 @@ class Yijing
 	
 	public static function getNumber($binary)
 	{
-		return self::$numbers[$binary];
+		$binary_to_number = array_flip( self::$number_to_binary );
+		return $binary_to_number[$binary];
 	}
 	
 	public static function getNumbers()
@@ -101,6 +102,16 @@ class Yijing
 		53 => '䷴',	54 => '䷵',	55 => '䷶',	56 => '䷷',	
 		57 => '䷸',	58 => '䷹',	59 => '䷺',	60 => '䷻',	
 		61 => '䷼',	62 => '䷽',	63 => '䷾',	64 => '䷿',
+	];
+	public static $trigrams = [
+		'☰' => '777',
+		'☷' => '888',
+		'☳' => '788',
+		'☶' => '887',
+		'☵' => '878',
+		'☲' => '787',
+		'☴' => '877',
+		'☱' => '778',
 	];
 	
 	protected static $numbers = [

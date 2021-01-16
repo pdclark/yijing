@@ -26,6 +26,22 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<style>
 
+		body{
+			font-family: monospace;
+		}
+
+		h2.易經 {
+			margin: 2vh 2vw 0 0;
+		}
+		#text h2, pre h2 {
+			font-size: 20vh;
+			margin:0;	
+		}
+
+		h3 {
+			font-size: 18px;
+		}
+
 		pre,p {clear:left; white-space: pre-wrap; max-width: 75vw;
 			 text-shadow: 0 0 1vw #fff;
 		}
@@ -35,6 +51,7 @@
 			/*position: fixed; bottom: 11vh; left: 2vw;*/
 			font-size: 2vw;
 			position: relative; left: 2vw;
+			display:none;
 		}
 
 		p[data-val="6"],
@@ -77,8 +94,15 @@
 		/* Before, after, and hexagrams */
 		nav {
 			position: fixed; top: 0vh; left: 0;
+			width: 100vw;
+			background-color: rgba( 255,255,255,.8);
 		}
-		nav ul { width: 20vw; margin:0; padding:0;}
+		nav .ul-wrap { 
+			width: 30vw; margin:0; padding:0; float:left; 
+		}
+		nav .ul-wrap ul {
+			margin:0; padding: 0 0 0 5vw;
+		}
 		nav li { list-style-type: none; margin:0; padding:0; width: 2.5vw; display:inline-block; position: relative; }
 		nav li:before {
 			content: attr( data-number );
@@ -87,7 +111,6 @@
 			left: .5vh;
 			font-size: 1.5vh;
 			color: rgba( 0,0,0, .3 );
-			font-family: monospace;
 		}
 		.roll-from { color: green; }        .roll-from:before { color: green; }
 		.roll-to { color: red; }        .roll-to:before { color: red; }
@@ -103,23 +126,26 @@
 			position: relative;
 		}
 
+		nav h3, nav h2 { float:left; }
+
 		nav .before, nav .after {
+			display: inline-block;
+			float:left;
 			/*border: 1px solid red;*/
-			width: 20vw;
-			height: 20vw;
+			/*width: 20vw;*/
+			/*height: 20vw;*/
 			position: relative;
 		}
 
 		nav .before:after, nav .after:after {
 			font-size: 20vw;
-			top: -1vw;
-			left: .5vw;
-			position: absolute;
+			/*top: -1vw;*/
+			/*left: .5vw;*/
+			/*position: absolute;*/
 		}
 		nav .before:before, nav .after:before {
-			font-family: monospace;
 			position: absolute;
-			top: 0;
+			top: 1vh;
 			left: 0;
 		}
 
@@ -132,11 +158,21 @@
 		nav li.roll-from:before, nav li.roll-to:before, nav li.roll-single:before {
 		}
 
+		nav li.active {
+			background-color: #000;
+			color: #fff;
+		}
+		/*nav li.active:before {
+			content: attr( data-binary );
+			color: green;
+		}*/
+
 		#roll-button {
-			position: fixed; bottom: 0vh; left: 2vw;
-			font-size: 10vh;
+			position: fixed; top: 0vh; right: 2vw;
+			font-size: 8vh;
 			z-index: 100;
 			display:inline-block;
+			float:right;
 		}
 		#roll-button a {
 			text-decoration: none;
@@ -147,6 +183,7 @@
 		b {
 			font-weight: normal;
 			position: relative;
+			white-space: nowrap;
 		}
 		b:first-child span {
 			/*top: -18vh;
@@ -176,40 +213,108 @@
 			}*/
 		/*}*/
 
-		body{ margin-left: 22vw; top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw; overflow-x:hidden;}
+		body{ top:0; width: 80vw; font-size: 2vw; background: #fff ; font-size: 2.8vw; overflow-x:hidden; margin: 10vh auto 10vh auto; }
 	</style>
 	<script   src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
 	</head>
 
 	<body>
-		<pre id="roll-button"><a href="javascript:window.location.reload()">🔄</a></pre>
-
 	<div id="app"></div>
 
 	<script>
 	jQuery(document).ready( function($){
 
 		window.data = <?php echo $api; ?>;
+		window.trigrams = <?php echo json_encode( Yijing::$trigrams ); ?>;
 
 		window.$roll_changes_to_text = $('<pre>').html( data.roll_changes_to_text );
-		window.$text = $('<div>').html( data.text );
+		window.$text = $('<div id="text">').html( data.text );
 		window.$rollEl = $('<pre>' ).attr('id', 'roll').html( data.roll_large_html );
 
 		$('#app').before( $text ).before( $roll_changes_to_text );
 
-		window.$nav = $('<nav><div class="before"></div><ul></ul><div class="after"></div></nav>');
+		window.$nav = $('<nav><h2 class="易經">易經</h2><h3>From:</h3> <div class="before"></div> <div class="ul-wrap"><ul class="from-above"></ul><ul class="from-below"></ul></div> <h3>To:</h3> <div class="after"></div> <div class="ul-wrap"> <ul class="to-above"></ul><ul class="to-below"></ul> </div> <div id="roll-button"><a href="javascript:window.location.reload()">🔄</a></div> </nav>');
 
 		$nav.append( $rollEl );
 
-		$.each( window.data.hexagrams, function( index, hex ) {
-			$nav.find('ul').append( 
+		$.each( window.trigrams, function( trigram, binary ) {
+			$nav.find('ul.from-above').append( 
 				$('<li>' )
-					.attr('data-number', index )
-					.attr('data-unicode', hex.unicode )
-					.attr('data-binary', hex.binary )
-					.text( hex.unicode )
+					.attr('data-trigram', trigram )
+					.attr('data-binary', binary )
+					.text( trigram )
+			);
+			$nav.find('ul.from-below').append( 
+				$('<li>' )
+					.attr('data-trigram', trigram )
+					.attr('data-binary', binary )
+					.text( trigram )
+			);
+			$nav.find('ul.to-above').append( 
+				$('<li>' )
+					.attr('data-trigram', trigram )
+					.attr('data-binary', binary )
+					.text( trigram )
+			);
+			$nav.find('ul.to-below').append( 
+				$('<li>' )
+					.attr('data-trigram', trigram )
+					.attr('data-binary', binary )
+					.text( trigram )
 			);
 		});
+
+		// It's backwards :'(
+		var fromBelowRoll = window.data.hexagrams[ window.data.number ].roll.substr(0,3);
+		var fromAboveRoll = window.data.hexagrams[ window.data.number ].roll.substr(3,3);
+
+		$nav.find('ul.from-above li[data-binary=' + fromAboveRoll + ']' ).addClass( 'active' );
+		$nav.find('ul.from-below li[data-binary=' + fromBelowRoll + ']' ).addClass( 'active' );
+
+		var toBelowRoll = window.data.hexagrams[ window.data.roll_changes_to_number ].roll.substr(0,3);
+		var toAboveRoll = window.data.hexagrams[ window.data.roll_changes_to_number ].roll.substr(3,3);
+
+		$nav.find('ul.to-above li[data-binary=' + toAboveRoll + ']' ).addClass( 'active' );
+		$nav.find('ul.to-below li[data-binary=' + toBelowRoll + ']' ).addClass( 'active' );
+
+		$nav.find( 'li' ).click( function() {
+
+			$(this).addClass('active').siblings().removeClass('active');
+
+			var rollFrom = $('ul.from-below li.active').data('binary') + "" + $('ul.from-above li.active').data('binary');
+			var rollTo = $('ul.to-below li.active').data('binary') + "" + $('ul.to-above li.active').data('binary');
+
+			var r = [];
+			var rollFromArray = rollFrom.split('');
+			var rollToArray = rollTo.split('');
+			$.each( rollFromArray, function( index, n ) {
+				if ( 7 == n && 8 == rollToArray[ index ] ) {
+					r.push( 9 );
+					return;
+				}
+				if ( 8 == n && 7 == rollToArray[ index ] ) {
+					r.push( 6 );
+					return;
+				}
+				r.push( n );
+			} );
+
+			console.log( 'Send:', rollFrom, rollTo, r.join() );
+
+			var roll = r.join( '' );
+
+			var url = './?roll=' + roll;
+
+			$.get( url, {},
+				function( data ) {
+					// console.log( data );
+					window.data = JSON.parse( data );
+					updateData();
+				}
+			);
+
+		} );
+		/*
 		$nav.find('li').click(function(){
 			var roll = '';
 			for ( i=5; i>=0; i-- ) {
@@ -241,10 +346,26 @@
 			);
 
 		});
+		*/
 		$('#app').after( $nav );
 
 		function updateData() {
 			// console.log( window.data.roll_large_html );
+			// console.log( window.data );
+			// console.log( 'Receive:', window.data.roll.join('') );
+			// It's backwards :'(
+			var fromBelowRoll = window.data.hexagrams[ window.data.number ].roll.substr(0,3);
+			var fromAboveRoll = window.data.hexagrams[ window.data.number ].roll.substr(3,3);
+
+			$nav.find('ul.from-above li[data-binary=' + fromAboveRoll + ']' ).addClass( 'active' ).siblings().removeClass( 'active' );
+			$nav.find('ul.from-below li[data-binary=' + fromBelowRoll + ']' ).addClass( 'active' ).siblings().removeClass( 'active' );
+
+			var toBelowRoll = window.data.hexagrams[ window.data.roll_changes_to_number ].roll.substr(0,3);
+			var toAboveRoll = window.data.hexagrams[ window.data.roll_changes_to_number ].roll.substr(3,3);
+
+			$nav.find('ul.to-above li[data-binary=' + toAboveRoll + ']' ).addClass( 'active' ).siblings().removeClass( 'active' );
+			$nav.find('ul.to-below li[data-binary=' + toBelowRoll + ']' ).addClass( 'active' ).siblings().removeClass( 'active' );
+
 			window.$text.html( window.data.text );
 			if ( window.data.number == window.data.roll_changes_to_number ) {
 				window.$roll_changes_to_text.html( '' );
@@ -276,8 +397,8 @@
 					.attr('data-unicode', unicode_before );
 
 				$nav.find('.after')
-					.attr('data-number', '' )
-					.attr('data-unicode', '' );
+					.attr('data-number', data.number )
+					.attr('data-unicode', unicode_before );
 			}else {
 				$nav
 					.find('li[data-number="' + data.number + '"]')
@@ -309,6 +430,13 @@
 			$roll_changes_to_text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').remove();
 			$text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').hide();
 
+			$.each( window.data.roll, function( index, n ) {
+				if ( 6 == n || 9 == n ) {
+					$( '.line-' + ( index + 1 ) ).show();
+				}
+			} );
+
+			/*
 			$rollEl.find('p').each(function(){
 				if ( '6' == $(this).data('val') || '9' == $(this).data('val') ) {
 					switch ( $(this).index() ) {
@@ -321,6 +449,7 @@
 					}
 				}
 			});
+			*/
 
 			if ( $('.roll-single' ).length ) {
 				$text.find( '.line-1,.line-2,.line-3,.line-4,.line-5,.line-6').hide();
