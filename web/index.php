@@ -168,7 +168,7 @@
 		}*/
 
 		#roll-button {
-			position: fixed; top: 0vh; right: 2vw;
+			position: fixed; top: 10vh; right: 2vw;
 			font-size: 8vh;
 			z-index: 100;
 			display:inline-block;
