@@ -275,7 +275,7 @@
 
 		$('#app').before( $text ).before( $roll_changes_to_text );
 
-		window.$nav = $('<nav><h2 class="易經">易<br/>經</h2><div class="ul-wrap first"><h3>From:</h3> <div class="before"></div><ul class="from-above"></ul><ul class="from-below"></ul></div>  <div class="ul-wrap"> <h3>To:&nbsp;&nbsp;</h3> <div class="after"></div> <ul class="to-above"></ul><ul class="to-below"></ul> </div> <div id="roll-button"><a href="javascript:window.location.reload()">🔄</a></div> </nav>');
+		window.$nav = $('<nav><h2 class="易經">易<br/>經</h2><div class="ul-wrap first"><h3>From:</h3> <div class="before"></div><ul class="from-above"></ul><ul class="from-below"></ul></div>  <div class="ul-wrap"> <h3>To:&nbsp;&nbsp;</h3> <div class="after"></div> <ul class="to-above"></ul><ul class="to-below"></ul> </div> <div id="roll-button"><a href="javascript:window.location.reload()">🔄</a><br/><a href="https://www.blurb.com/b/10736087-changes-i-ching-yi-jing">📖</a></div> </nav>');
 
 		$nav.append( $rollEl );
 
